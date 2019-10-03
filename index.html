@@ -21,6 +21,7 @@
     <div class="text-center">
       <h1>Cross-domain-cookie</h1>
       <p>Access-Control-Allow-Credentials: false/true</p>
+      <a href="https://post-cart-server-simulation.herokuapp.com/redirect">go to backend url</a>
     </div>
     
     <div class="row" id="form">
@@ -58,10 +59,6 @@
         <pre id="response"></pre>
       </div>
     </div>
-
-    
-
-      
     </div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
@@ -85,7 +82,7 @@
           quantity
         })
         $('#response').text(JSON.stringify(response.data.itemArrayByCartId, null, '\t'))
-        console.log(response.data.itemArrayByCartId)
+        console.log(response)
       }
     </script>
   </body>
