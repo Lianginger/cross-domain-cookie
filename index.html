@@ -4,7 +4,89 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <title>Cross-domain-cookie</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
   </head>
-  <body></body>
+  <body class="container my-5">
+    <div class="text-center">
+      <h1>Cross-domain-cookie</h1>
+      <p>Access-Control-Allow-Credentials: false/true</p>
+    </div>
+    
+    <div class="row" id="form">
+      <div class="col-md-6">
+        <p>ProductId</p>
+        <div class="input-group mb-3">
+          <input type="number" class="form-control" placeholder="ProductId" id="productId" value="1" />
+        </div>
+        <p>Quantity</p>
+        <div class="input-group mb-3">
+          <input type="number" class="form-control" placeholder="Quantity" id="quantity" value="1" />
+        </div>
+        <hr />
+        <p>URL</p>
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Post URL"
+            id="postURL"
+            value="https://post-cart-server-simulation.herokuapp.com/cart"
+          />
+        </div>
+        <p>Set withCredentials</p>
+        <div class="input-group mb-3">
+          <select class="custom-select">
+            <option value="false">false</option>
+            <option value="true">true</option>
+          </select>
+        </div>
+        <button class="w-100 btn btn-outline-dark" onclick="addToCart()">POST</button>
+      </div>
+      <div class="col-md-6">
+        <h3 class="my-3">Response:</h3>
+        <pre id="response"></pre>
+      </div>
+    </div>
+
+    
+
+      
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      let productId = parseInt($('#productId').val())
+      let quantity = parseInt($('#quantity').val())
+      let postURL = $('#postURL').val()
+      let withCredentials = $('option:selected').val() === 'true'
+
+      $('#form').change(function() {
+        productId = parseInt($('#productId').val())
+        quantity = parseInt($('#quantity').val())
+        postURL = $('#postURL').val()
+        withCredentials = $('option:selected').val() === 'true'
+        console.log(productId, quantity, postURL, withCredentials)
+      })
+
+      async function addToCart() {
+        axios.defaults.withCredentials = withCredentials
+        const response = await axios.post(`${postURL}`, {
+          productId,
+          quantity
+        })
+        $('#response').text(JSON.stringify(response.data.itemArrayByCartId, null, '\t'))
+        console.log(response.data.itemArrayByCartId)
+      }
+    </script>
+  </body>
 </html>
