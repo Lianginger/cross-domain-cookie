@@ -22,6 +22,7 @@
       <h1>Cross-domain-cookie</h1>
       <p>Access-Control-Allow-Credentials: false/true</p>
       <p>Device detection: <span id="device"></span></p>
+      <p>Page view: <span id="pageView"></span></p>
       <a href="https://post-cart-server-simulation.herokuapp.com/redirect" id="goToBackendURL">go to backend url</a>
     </div>
     
@@ -78,6 +79,7 @@
 
       userPageView = parseInt(sessionStorage.getItem('userPageView'))
       console.log(userPageView)
+      $('#pageView').text(userPageView)
 
       $('#device').text(device)
       if(device === 'mobile' && userPageView === 1){
